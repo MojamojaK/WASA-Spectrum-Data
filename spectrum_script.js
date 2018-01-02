@@ -7,7 +7,7 @@ let selection = [1, 1]
 let initialLoad = false
 let d = new Date()
 
-let connection;
+let connection
 
 window.onload = function () {
   let lastTouch = d.getTime()
@@ -101,9 +101,14 @@ window.onload = function () {
               let valid = true
               let cstr = 'Change ['
               let servo_id = (((buf[6] & 0x04) >> 2) & 0xFF) + 1
-              if (servo_id < 1 || servo_id > 2) { cstr += 'ERROR '; valid = false } else cstr += servoAlias[servo_id] + ' '
+              if (servo_id < 1 || servo_id > 2) {
+                cstr += 'ERROR '
+                valid = false
+              } else {
+                cstr += servoAlias[servo_id] + ' '
+              }
               let tmpStr = (buf[6] & 0x03).toString()
-              if    (tmpStr === '1') cstr += 'MIN]'
+              if (tmpStr === '1') cstr += 'MIN]'
               else if (tmpStr === '2') cstr += 'NEUTRAL]'
               else if (tmpStr === '3') cstr += 'MAX]'
               else { cstr += 'ERROR]'; valid = false }
@@ -122,7 +127,12 @@ window.onload = function () {
             } else if (buf[5] === 0x03) { /* サーボ再起動 */
               let valid = true
               let cstr = 'Reboot ['
-              if (buf[6] < 1 || buf[6] > 2) { cstr += 'ERROR'; valid = false } else cstr += servoAlias[buf[6]]
+              if (buf[6] < 1 || buf[6] > 2) {
+                cstr += 'ERROR'
+                valid = false
+              } else {
+                cstr += servoAlias[buf[6]]
+              }
               cstr += '] servo'
               if (valid && confirm(cstr + '?')) {
                 socketRespond(buf, 1)
@@ -133,7 +143,12 @@ window.onload = function () {
             } else if (buf[5] === 0x04) { /* トルク%セット */
               let valid = true
               let cstr = 'Set ['
-              if (buf[6] < 1 || buf[6] > 2) { cstr += 'ERROR'; valid = false } else cstr += servoAlias[buf[6]]
+              if (buf[6] < 1 || buf[6] > 2) {
+                cstr += 'ERROR'
+                valid = false
+              } else {
+                cstr += servoAlias[buf[6]]
+              }
               cstr += ' TORQUE[%]] ' + buf[7].toString() + '% ===> ' + buf[8].toString() + '%'
               if (!(buf[8] >= 0 && buf[8] <= 100)) valid = false
               if (valid && confirm(cstr + '?')) {
