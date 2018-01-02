@@ -1,3 +1,7 @@
+// http://closure-compiler.appspot.com/ でプログラムを小さくして、
+// gzipで圧縮してファイル名を'script.js.gz'にしてください
+// 13.5KBのファイルが1.6KBぐらいになります
+
 let servoAlias = ['', 'RUDDER', 'ELEVATOR']
 let torqueModesAlias = ['OFF', 'ON', 'BREAK']
 let valueTypesAlias = ['MIN', 'NEU', 'MAX']
